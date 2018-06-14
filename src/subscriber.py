@@ -5,7 +5,7 @@ def on_connect(client, userdata, flags, rc):
     print("Connected with result code {}".format(rc))
 # Subscribing in on_connect() means that if we lose the connection and
 # reconnect then subscriptions will be renewed.
-    client.subscribe("RasPi1/10Hz")
+    client.subscribe("RasPi1/10Hz", 2)
 
 # The callback for when a PUBLISH message is received from the server.
 def on_message(client, userdata, msg):
@@ -13,11 +13,14 @@ def on_message(client, userdata, msg):
     with open('random.csv', 'wb') as fd:
         fd.write(msg.payload)
 
-client = mqtt.Client()
+# Client constructot optional params ->
+# Client(client_id=””, clean_session=True, userdata=None, protocol=MQTTv311, transport=”tcp”)
+# We set clean_session False, so in case connection is lost, it'll reconnect with same ID
+client = mqtt.Client(client_id="ENC_Connector", clean_session=False)
 client.on_connect = on_connect
 client.on_message = on_message
 
-client.connect("35.237.36.219", 1883, 60)
+client.connect("35.237.36.219", 1883, 30)
 
 # Blocking call that processes network traffic, dispatches callbacks and
 # handles reconnecting.
