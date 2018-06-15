@@ -23,8 +23,11 @@ def ten_hz_client():
 	# The callback for when a PUBLISH message is received from the server.
 	def on_message(client1, userdata, msg):
 	    print("received message")
-	    with open('random.csv', 'wb') as fd:
+	    with open('received.csv', 'wb') as fd:
 	        fd.write(msg.payload)
+	    df = pd.read_csv('received.csv')
+	    df['mV'] = df['value']*0.125
+	    df.to_csv('updated.csv', index=False)
 
 	# Params -> Client(client_id=””, clean_session=True, userdata=None, protocol=MQTTv311, transport=”tcp”)
 	# We set clean_session False, so in case connection is lost, it'll reconnect with same ID
