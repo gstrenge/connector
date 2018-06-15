@@ -3,15 +3,15 @@ import pandas as pd
 import numpy as np
 from datetime import datetime
 
-host = "35.237.36.219"
-port = 1883
-keepalive = 30
 
 def ten_hz_client():
 	"""
 	MQTT Client connector in charge of receiving the 10 Hz csv files,
 	perform calculations and store them in the database
 	"""
+	host = "35.237.36.219"
+	port = 1883
+	keepalive = 30
 	client1_id = "ENC_Connector"
 	# The callback for when the client receives a CONNACK response from the server.
 	def on_connect(client1, userdata, flags, rc):
