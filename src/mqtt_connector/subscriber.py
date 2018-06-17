@@ -1,3 +1,4 @@
+import os
 import paho.mqtt.client as mqtt
 import pandas as pd
 import numpy as np
@@ -48,6 +49,7 @@ def write_to_db(payload, db_client):
 		sub_df = grouped.get_group(group)[['mV']]
 		db_client.write_points(sub_df, 'measurements', tags=tags)
 	print('Data Written to DB')
+	os.remove('received.csv')
 
 def subscribe_to_topic(topic, client):
 	client.subscribe(topic, 2)
