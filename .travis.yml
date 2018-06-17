@@ -13,6 +13,11 @@ install:
   - conda info -a
   - conda env create -f environment.yml
   - source activate mqtt-connector
+  - curl -sL https://repos.influxdata.com/influxdb.key | sudo apt-key add -
+  - source /etc/lsb-release
+  - echo "deb https://repos.influxdata.com/${DISTRIB_ID,,} ${DISTRIB_CODENAME} stable" | sudo tee /etc/apt/sources.list.d/influxdb.list
+  - sudo apt-get install influxdb
+  - sudo service influxdb start
 
 script:
   - python -m pytest -v 
