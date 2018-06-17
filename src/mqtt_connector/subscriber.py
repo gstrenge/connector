@@ -20,13 +20,13 @@ def connect_to_broker(client_id, host, port, keepalive, on_connect, on_message):
 	# handles reconnecting.
 	client.loop_forever()
 
-def write_to_db(msg, db_client):
+def write_to_db(payload, db_client):
 	#Edits received CSV file from broker to add actual mV values
 	#And writes them into InfluxDB
 	print("Received Message")
 	#create new file and write the received msg on it
 	with open('received.csv', 'wb') as fd:
-	    fd.write(msg.payload)
+	    fd.write(str.encode(payload))
 	#Create dataframe
 	df = pd.read_csv('received.csv')
 	#Calculate actual mV measurement
@@ -83,7 +83,8 @@ def main():
 	def on_message(client, userdata, msg):
 		# The callback for when a PUBLISH message is received from the server.
 		#Detects an arriving message (CSV) and writes it in the db
-	    write_to_db(msg, db_client)
+	    payload = msg.payload
+	    write_to_db(payload, db_client)
 
 	#Establish conection with broker and start receiving messages
 	connect_to_broker(client_id=client_id, host=host, port=port, keepalive=keepalive, on_connect=on_connect, on_message=on_message)
