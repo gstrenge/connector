@@ -3,6 +3,7 @@ python:
   - "3.6"
 install:
   - sudo apt-get update
+  # Instalation of the conda env
   - wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh -O miniconda.sh;
   - bash miniconda.sh -b -p $HOME/miniconda
   - export PATH="$HOME/miniconda/bin:$PATH"
@@ -13,11 +14,13 @@ install:
   - conda info -a
   - conda env create -f environment.yml
   - source activate mqtt-connector
+  # Installation of influxdb
   - curl -sL https://repos.influxdata.com/influxdb.key | sudo apt-key add -
   - source /etc/lsb-release
   - echo "deb https://repos.influxdata.com/ubuntu trusty stable" | sudo tee /etc/apt/sources.list.d/influxdb.list
   - sudo apt-get update
   - sudo apt-get -y install influxdb
+  # Activating influx
   - sudo service influxdb start
 
 script:
