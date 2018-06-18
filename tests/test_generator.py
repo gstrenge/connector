@@ -1,4 +1,4 @@
-import unittest, os
+import unittest, os, time
 import paho.mqtt.client as mqtt
 import pandas as pd
 import numpy as np
@@ -32,3 +32,18 @@ def test_write_to_db():
 	assert value == 100*0.125
 	#BUG : dataframe.index.values[0] has more precision than np.datetime64(now)
 	#assert dataframe.index.values[0] == np.datetime64(now)
+
+def test_broker_connection():
+	from src.mqtt_connector.subscriber import connect_to_broker, subscribe_to_topic
+	host = "localhost"
+	port = 1883
+	client_id = "TESTING_CLIENT"
+	topic = "testing/topic"
+	keepalive = 30
+
+	def on_connect(client, userdata, flags, rc):
+		subscribe_to_topic(topic=topic, client=client)
+	
+	client, connection = connect_to_broker(client_id=client_id, host=host, port=port, on_connect=on_connect, on_message=None, keepalive=keepalive)
+
+	assert connection == 0
