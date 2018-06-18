@@ -16,10 +16,8 @@ def connect_to_broker(client_id, host, port, keepalive, on_connect, on_message):
 	client = mqtt.Client(client_id=client_id, clean_session=False)
 	client.on_connect = on_connect
 	client.on_message = on_message
-	client.connect(host, port, keepalive)
-	# Blocking call that processes network traffic, dispatches callbacks and
-	# handles reconnecting.
-	client.loop_forever()
+	connection = client.connect(host, port, keepalive)
+	return (client, connection)
 
 def write_to_db(payload, db_client):
 	#Edits received CSV file from broker to add actual mV values
@@ -89,7 +87,10 @@ def main():
 	    write_to_db(payload, db_client)
 
 	#Establish conection with broker and start receiving messages
-	connect_to_broker(client_id=client_id, host=host, port=port, keepalive=keepalive, on_connect=on_connect, on_message=on_message)
+	client, connection = connect_to_broker(client_id=client_id, host=host, port=port, keepalive=keepalive, on_connect=on_connect, on_message=on_message)
+	# Blocking call that processes network traffic, dispatches callbacks and
+	# handles reconnecting.
+	client.loop_forever()
 
 if __name__ == '__main__':
 	main()
