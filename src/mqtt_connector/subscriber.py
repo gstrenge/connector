@@ -62,7 +62,7 @@ def main():
 	db_port = 8086
 	db_username = 'root'
 	db_password = 'root'
-	database = 'test2'
+	database = 'testing'
 	
 	#info of the MQTT broker
 	host = "35.237.36.219"
