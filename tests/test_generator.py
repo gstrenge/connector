@@ -10,9 +10,9 @@ def test_write_to_db():
 	
 	#Connects to local InfluxDB
 	db_client = connect_to_db(host='localhost', port=8086, username='root', 
-		password='root', database='testing')
+		password='root', database='test')
 	#Creates local Database
-	db_client.create_database('testing')
+	db_client.create_database('test')
 	#Create testing CSV file with one mock up line
 	now = datetime.now()
 	one_line = str.encode("adc,channel,time_stamp,value\n1,1,{},100".format(now))
@@ -20,6 +20,7 @@ def test_write_to_db():
 		csvfile.write(one_line)
 	f = open("testing.csv")
 	payload = f.read()
+	payload = str.encode(payload)
 	write_to_db(payload=payload, db_client=db_client)
 
 	written = db_client.query('SELECT * FROM "measurements"')
@@ -40,10 +41,7 @@ def test_broker_connection():
 	client_id = "TESTING_CLIENT"
 	topic = "testing/topic"
 	keepalive = 30
-
 	def on_connect(client, userdata, flags, rc):
 		subscribe_to_topic(topic=topic, client=client)
-	
 	client, connection = connect_to_broker(client_id=client_id, host=host, port=port, on_connect=on_connect, on_message=None, keepalive=keepalive)
-
 	assert connection == 0

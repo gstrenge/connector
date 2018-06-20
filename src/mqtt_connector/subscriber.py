@@ -25,7 +25,7 @@ def write_to_db(payload, db_client):
 	print("Received Message")
 	#create new file and write the received msg on it
 	with open('received.csv', 'wb') as fd:
-	    fd.write(str.encode(payload))
+	    fd.write(payload)
 	#Create dataframe
 	df = pd.read_csv('received.csv')
 	#Calculate actual mV measurement
