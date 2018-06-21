@@ -29,9 +29,9 @@ def test_write_to_db():
 	#Remove mockup CSV file
 	os.remove("testing.csv")
 	#Deletes mockup DB
-	db_client.drop_database('testing')
+	db_client.drop_database('test')
 	assert value == 100*0.125
-	#BUG : dataframe.index.values[0] has more precision than np.datetime64(now)
+	#bug : dataframe.index.values[0] has more precision than np.datetime64(now)
 	#assert dataframe.index.values[0] == np.datetime64(now)
 
 def test_broker_connection():
