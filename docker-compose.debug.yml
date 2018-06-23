@@ -3,5 +3,5 @@ version: '2.1'
 services:
   mqtt-connector:
     image: mqtt-connector
-    build:
-      context: .
+    volumes:
+      - ./mqtt_connector:/app
