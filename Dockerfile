@@ -1,16 +1,13 @@
-
-# Python support can be specified down to the minor or micro version
-# (e.g. 3.6 or 3.6.3).
-# OS Support also exists for jessie & stretch (slim and full).
-# See https://hub.docker.com/r/library/python/ for all supported Python
+# Docker file to build container image based on 
+# a miniconda image from the docker cloud
 FROM continuumio/miniconda3
+LABEL maintainer="Sebastian Arboleda <sebasarboleda22@gmail.com>"
 
 LABEL Name=mqtt-connector Version=0.0.1
-EXPOSE 1883
 
 COPY environment.yml /
 
-# Using miniconda (make sure to replace 'myenv' w/ your environment name):
+# Create conda environment based on yaml file
 RUN conda env create -f environment.yml
 
 ADD mqtt_connector /app
