@@ -69,7 +69,7 @@ def main():
 	port = 1883
 	keepalive = 30
 	client_id = "RECEIVER_1"
-	topic = "RasPi1/#"
+	topic = "usa/quincy/1"
 
 	db_client = connect_to_db(host=db_host, port=db_port, username=db_username, password=db_password, database=database)
 
