@@ -7,7 +7,15 @@ COPY environment.yml /
 
 # Create conda environment based on yaml file
 RUN conda env create -f environment.yml
-
-ADD mqtt_connector /app
+COPY mqtt_connector /app
 WORKDIR /app
 CMD /bin/bash -c "source activate mqtt-connector && python -u subscriber.py"
+
+# To build:
+# docker build -t mqtt-connector .
+
+# To run:
+# docker run -v --restart unless-stopped --name grafana1 grafana/grafana
+
+# To debug locally:
+# docker run -v ./mqtt_connector:/app --restart unless-stopped --name grafana1 grafana/grafana
