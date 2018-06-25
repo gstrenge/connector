@@ -5,3 +5,4 @@ services:
     image: mqtt-connector
     build:
       context: .
+    restart: always
