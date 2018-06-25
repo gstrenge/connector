@@ -10,5 +10,6 @@ LICENSE
 .vscode
 */*/.pyc
 */*/.csv
+*/*/__init__.py
 */*/__pycache__*
 */*/.pytest_cache*
