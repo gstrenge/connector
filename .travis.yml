@@ -27,7 +27,7 @@ install:
   - echo "deb https://repos.influxdata.com/ubuntu trusty stable" | sudo tee /etc/apt/sources.list.d/influxdb.list
   - sudo apt-get update
   # Install local mosquitto server
-  - sudo apt-get install mosquitto
+  #- sudo apt-get install mosquitto
   - sudo apt-get -y install influxdb
   # Activating influx
   - sudo service influxdb start
