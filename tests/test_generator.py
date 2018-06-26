@@ -7,10 +7,14 @@ from influxdb import DataFrameClient
 
 def test_write_to_db():
 	from mqtt_connector.subscriber import connect_to_db, write_to_db
-	
+	db_host = "localhost"
+	db_port = 8086
+	db_username = "root"
+	db_password = "root"
+	db_database = "test"
 	#Connects to local InfluxDB
-	db_client = connect_to_db(host='localhost', port=8086, username='root', 
-		password='root', database='test')
+	db_client = connect_to_db(host=db_host, port=db_port, username=db_username, 
+		password=db_password, database=db_database)
 	#Creates local Database
 	db_client.create_database('test')
 	#Create testing CSV file with one mock up line
@@ -22,7 +26,6 @@ def test_write_to_db():
 	payload = f.read()
 	payload = str.encode(payload)
 	write_to_db(payload=payload, db_client=db_client)
-
 	written = db_client.query('SELECT * FROM "measurements"')
 	dataframe = written['measurements']
 	value = dataframe['mV'][0] 
@@ -36,7 +39,7 @@ def test_write_to_db():
 
 def test_broker_connection():
 	from mqtt_connector.subscriber import connect_to_broker, subscribe_to_topic
-	host = "localhost"
+	host = "35.237.36.219"
 	port = 1883
 	client_id = "TESTING_CLIENT"
 	topic = "testing/topic"
