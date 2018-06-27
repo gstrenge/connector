@@ -7,7 +7,7 @@ COPY environment.yml /
 
 # Create conda environment based on yaml file
 RUN conda env create -f environment.yml
-COPY mqtt_connector /app
+COPY ./app /app
 WORKDIR /app
 CMD /bin/bash -c "source activate mqtt-connector && python -u subscriber.py"
 
