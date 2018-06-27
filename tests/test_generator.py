@@ -6,7 +6,7 @@ from datetime import datetime
 from influxdb import DataFrameClient
 
 def test_write_to_db():
-	from mqtt_connector.subscriber import connect_to_db, write_to_db
+	from app.subscriber import connect_to_db, write_to_db
 	db_host = "localhost"
 	db_port = 8086
 	db_username = "root"
@@ -38,7 +38,7 @@ def test_write_to_db():
 	#assert dataframe.index.values[0] == np.datetime64(now)
 
 def test_broker_connection():
-	from mqtt_connector.subscriber import connect_to_broker, subscribe_to_topic
+	from app.subscriber import connect_to_broker, subscribe_to_topic
 	host = "35.237.36.219"
 	port = 1883
 	client_id = "TESTING_CLIENT"
