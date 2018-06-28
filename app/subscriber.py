@@ -58,7 +58,7 @@ def main():
 	perform calculations and store them in the database
 	"""
 	#influxdb information for connection -- right now is local	
-	db_host = 'localhost'
+	db_host = 'influxdb'
 	db_port = 8086
 	db_username = 'root'
 	db_password = 'root'
