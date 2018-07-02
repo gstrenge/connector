@@ -10,7 +10,7 @@ COPY environment.yml /
 RUN conda env create -f environment.yml
 COPY ./app /app
 WORKDIR /app
-CMD /bin/bash -c "source activate mqtt-connector && python -u subscriber.py"
+CMD /bin/bash -c "source activate mqtt-connector && python -u app.py"
 
 # To build:
 # docker build -t mqtt-connector .
