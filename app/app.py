@@ -51,7 +51,7 @@ def main():
 	host = "35.237.36.219"
 	port = 1883
 	keepalive = 30
-	client_id = "RECEIVER_TEST"
+	client_id = None #client_id is randomly generated
 	topic = "usa/quincy/1"
 
 	def on_connect(client, userdata, flags, rc):
@@ -75,8 +75,9 @@ def main():
 
 	#Establish conection with broker and start receiving messages
 	# Params -> Client(client_id=””, clean_session=True, userdata=None, protocol=MQTTv311, transport=”tcp”)
-	# We set clean_session False, so in case connection is lost, it'll reconnect with same ID
-	client = mqtt.Client(client_id=client_id, clean_session=False)
+	# We set clean_session to False, so in case connection is lost, it'll reconnect with same ID
+	# For debug purposes (client_id is not defined) we'll set it to True
+	client = mqtt.Client(client_id=client_id, clean_session=True)
 	client.on_connect = on_connect
 	client.on_message = on_message
 	client.connect(host, port, keepalive)
