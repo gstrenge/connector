@@ -1,0 +1,18 @@
+version: '3.1'
+
+services:
+  connector:
+      container_name: connector
+      build: .
+      links:
+        - influxdb
+      volumes:
+        - ./app:/app
+
+  influxdb:
+    image: influxdb
+    container_name: influxdb
+    ports:
+      - "8083:8083"
+      - "8086:8086"
+      - "8090:8090"
