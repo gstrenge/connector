@@ -67,7 +67,10 @@ def main():
 		# The callback for when a PUBLISH message is received from the server.
 		#Detects an arriving message (CSV) and writes it in the db
 	    payload = msg.payload
-	    write_to_db(payload, db_client)
+	    try:
+	        write_to_db(payload, db_client)
+	    except: #This needs to be changed
+		    print("Error")
 
 	# connects to database and creates new database
 	db_client = DataFrameClient(host=db_host, port=db_port, username=db_username, password=db_password, database=database)
