@@ -17,34 +17,19 @@ Install [Docker-Compose](https://docs.docker.com/compose/install/)
 1. Clone the repo.
     ```git clone https://github.com/encresearch/mqtt-connector.git```
 
-2. 
-
-3. Build images and run containers. 
-     We will be using our **dev** compose file.This file ensures that the ```mqtt-connector``` image is built using the files on your local machine and not pulled from our docker hub (our current production container). That way, all your local changes will take place when building the container.
+2. Build images and run containers. 
+     We will be using our **dev** compose file.This file builds the docker image using the files on your local machine and not pulled from our docker hub (our current production container). That way, all your local changes will take place when building the container.
     ```docker-compose -f docker-compose.dev.yml up -d```
-    You can visit http://localhost to checkout grafana webapp
+    This command will spin up both the ```mqtt-connector``` container and an ```influxdb``` container.
 
-Docker helps ensure that, besides the ```mqtt-connector``` container, all other containers are identical to those on our production environments, as they're pulled from our Docker Hub cloud.
-
-To stop and remove containers, networks and images created by up (external volumes won't be removed). **We recommend doing this and rebuilding images (```up```) every time testing is performed, making sure all the pulled images are the latest builds on our hub.**
-```docker-compose -f docker-compose.dev.yml down```
-
-## Testing
-Tests are performed automatically everytime changes are pushed. To test locally, 
+    To stop and remove containers, networks and images created by up (external volumes won't be removed).
+    ```docker-compose -f docker-compose.dev.yml down```
 
 ## Overview and Usage
 ### MQTT Connector
 The main python application of this repo. Receives raw measurements data from an MQTT Broker, calculates actual values and stores them into an InfluxDB container.
 ### InfluxDB
-[InfluxDB](https://www.influxdata.com/) will be used to store our incoming sensor data. For data persistency, a docker volume ```influx_data``` is created. To access the **CLI** thorugh a container, enter ```docker exec -it influxdb influx```. For configuration and environment variables, see [here](https://hub.docker.com/_/influxdb/).
-### Grafana
-[Grafana](https://grafana.com/) will be used as web application for data visualization. It runs on port 3000 on the container, which is then mapped to port 80 on the host. For data persistency, a volume named ```grafana_data``` is created.
-**Configuration**
-The configuration file can be found in the ```etc/``` directory. For more info, see [grafana configuration docs](http://docs.grafana.org/installation/configuration/).
-### Telegraf
-Plugin-driven server agent for collecting and reporting metrics about the hosting server. Data is also stored in InfluxDB. Configuration file can also be found in the ```etc/``` directory.
-### Data Analysis [Work in Progress]
-Flask microservice that makes continuous queries to the InfluxDB and performs analysis and predictions based on the data. Repo can be found [here](https://github.com/encresearch/data-analysis)
+[InfluxDB](https://www.influxdata.com/) is used to store sensor data. Since this is a **dev** environment, there is no data persistency. To access the **CLI** (for debugging and testing purposes) thrugh a container, enter ```docker exec -it influxdb influx``` while the containers are running. For configuration and environment variables, see [here](https://hub.docker.com/_/influxdb/).
 
 ## Contributing
 Pull requests and stars are always welcome. To contribute [create an issue](https://github.com/encresearch/data-assimilation/issues) explaining the bug or feature request, create a branch off this issue and submit a pull request.
