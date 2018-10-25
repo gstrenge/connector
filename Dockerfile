@@ -2,7 +2,7 @@
 # a miniconda image from the docker cloud
 FROM continuumio/miniconda3
 LABEL maintainer="Sebastian Arboleda <sebasarboleda22@gmail.com>" 
-LABEL Name=mqtt-connector Version=0.0.1
+LABEL Name="mqtt-connector Version=0.0.1"
 
 COPY environment.yml /
 

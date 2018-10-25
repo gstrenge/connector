@@ -1,6 +1,5 @@
 name: mqtt-connector
 channels:
-  - anaconda
   - defaults
 dependencies:
   - atomicwrites=1.1.5=py36_0

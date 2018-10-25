@@ -1,3 +1,23 @@
+"""
+This program runs on the server side and subscribes to a specific topic in
+order to receive information from a specific publisher (Raspberry Pi)
+
+The devices' GAIN was chosen to be 1. Since this is a 16 bits device, the measured
+voltage will depend on the programmable GAIN. The following table shows the possible
+reading range per chosen GAIN. A GAIN of 1 goes from -4.096V to 4.096V.
+- 2/3 = +/-6.144V
+-   1 = +/-4.096V
+-   2 = +/-2.048V
+-   4 = +/-1.024V
+-   8 = +/-0.512V
+-  16 = +/-0.256V
+
+This means that the maximum range of this 16 bits device is +/-32767.
+Thus, to convert bits to V, we divide 4.096 by 32767,
+which gives us 0.000125. In conclusion, to convert this readings to mV
+we just need to multiply the output times 0.125, which is done in the server
+side (mqtt-connector) to prevent time delays.
+"""
 import os
 import paho.mqtt.client as mqtt
 import pandas as pd
@@ -14,7 +34,7 @@ def write_to_db(payload, db_client):
 	    fd.write(payload)
 	#Create dataframe
 	df = pd.read_csv('received.csv')
-	#Calculate actual mV measurement
+	#Convert from bits to mV
 	df['mV'] = df['value']*0.125
 	#Delete old value of bits
 	del df['value']
