@@ -4,7 +4,6 @@ channels:
 dependencies:
   - atomicwrites=1.1.5=py36_0
   - attrs=18.1.0=py36_0
-  - blas=1.0=mkl
   - cython=0.28.3=py36h14c3975_0
   - libedit=3.1.20170329=h6b74fdf_2
   - libffi=3.2.1=hd88cf55_4
