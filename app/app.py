@@ -68,7 +68,7 @@ def main():
 	database = 'testing'
 	
 	#info of the MQTT broker
-	host = "35.237.36.219"
+	host = "10.128.189.236"
 	port = 1883
 	keepalive = 30
 	client_id = None #client_id is randomly generated
