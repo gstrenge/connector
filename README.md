@@ -1,5 +1,5 @@
 # Connector: Sensor Data Gathering API Service
-[![Build Status](https://travis-ci.com/encresearch/mqtt-connector.svg?branch=master)](https://travis-ci.com/encresearch/mqtt-connector)
+[![Build Status](https://travis-ci.com/encresearch/connector.svg?branch=master)](https://travis-ci.com/encresearch/connector)
 
 Python application API that receives raw measurements data from an MQTT Broker, and stores it in InfluxDB.
 
