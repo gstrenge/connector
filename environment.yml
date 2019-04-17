@@ -1,4 +1,4 @@
-name: mqtt-connector
+name: connector
 channels:
   - defaults
 dependencies:

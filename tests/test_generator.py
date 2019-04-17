@@ -6,7 +6,7 @@ from datetime import datetime
 from influxdb import DataFrameClient
 
 def test_write_to_db():
-	from app.app import write_to_db
+	from connector.connector import write_to_db
 	db_host = "localhost"
 	db_port = 8086
 	db_username = "root"
