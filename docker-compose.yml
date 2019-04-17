@@ -7,24 +7,9 @@
 version: '3.1'
 
 volumes:
-    grafana_data: {}
     influx_data: {}
     
 services:
-
-  grafana:
-    container_name: grafana
-    image: grafana/grafana
-    ports:
-      - 80:3000
-    volumes:
-      # Makes sure data is stored in host only if 
-      # postgres is still not configured in the grafana.env file
-      - grafana_data:/var/lib/grafana
-    env_file:
-      - ./etc/grafana.conf
-    restart: unless-stopped
-
   connector:
     container_name: connector
     image: encresearch/mqtt-connector:latest
