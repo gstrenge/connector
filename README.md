@@ -1,9 +1,12 @@
-# MQTT-Connector: Sensor Data Acquisition, Visualization and Monitoring Platform
+# Connector: Sensor Data Gathering API Service
 [![Build Status](https://travis-ci.com/encresearch/mqtt-connector.svg?branch=master)](https://travis-ci.com/encresearch/mqtt-connector)
-Python application that receives raw measurements data from an MQTT Broker, and stores it in InfluxDB.
+
+Python application API that receives raw measurements data from an MQTT Broker, and stores it in InfluxDB.
 
 ## Introduction
-Python ETL data pipeline MQTT client that subscribes to sensor data sent by different [publishers](https://github.com/encresearch/mqtt-publisher) and stores it in InfluxDB. The main python app ```connector``` is containarized, built and run using docker. All the dependencies are installed in a [conda](https://conda.io/docs/) environment running inside the container.
+Python ETL data pipeline MQTT client that subscribes to sensor data sent by different [publishers](https://github.com/encresearch/publisher) and stores it in InfluxDB. The main python app ```connector``` is containarized, built and run using docker. All the dependencies are installed in a [conda](https://conda.io/docs/) environment running inside the container.
+
+This service is part of our [Earthquake Data Assimilation System](https://github.com/encresearch/data-assimilation-system).
 
 ## Dependencies and Setup
 The main python app ```connector``` is containarized, built and run using docker. By doing this, all the dependencies are installed in a [conda](https://conda.io/docs/) environment running inside the container.
