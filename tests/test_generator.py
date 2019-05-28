@@ -5,6 +5,17 @@ import numpy as np
 from datetime import datetime
 from influxdb import DataFrameClient
 
+def wait_for_influxdb(db_client):
+	"""Function to wait for the influxdb service to be available"""
+	try:
+		db_client.ping()
+		print("connected to db")
+		return None
+	except:
+		print("not yet")
+		time.sleep(1)
+		wait_for_influxdb(db_client)
+
 def test_write_to_db():
 	from connector.connector import write_to_db
 	db_host = "influxdb_test"
@@ -15,6 +26,8 @@ def test_write_to_db():
 	#Connects to local InfluxDB
 	db_client = DataFrameClient(host=db_host, port=db_port, username=db_username, 
 		password=db_password, database=db_database)
+	# waits for it to be active
+	wait_for_influxdb(db_client=db_client)
 	#Creates local Database
 	db_client.create_database('test')
 	#Create testing CSV file with one mock up line
