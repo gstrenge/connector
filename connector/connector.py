@@ -18,7 +18,7 @@ which gives us 0.000125. In conclusion, to convert this readings to mV
 we just need to multiply the output times 0.125, which is done in the server
 side (mqtt-connector) to prevent time delays.
 """
-import os
+import os, time
 import paho.mqtt.client as mqtt
 import pandas as pd
 import numpy as np
