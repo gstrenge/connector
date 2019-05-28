@@ -7,7 +7,7 @@ from influxdb import DataFrameClient
 
 def test_write_to_db():
 	from connector.connector import write_to_db
-	db_host = "localhost"
+	db_host = "influxdb_test"
 	db_port = 8086
 	db_username = "root"
 	db_password = "root"

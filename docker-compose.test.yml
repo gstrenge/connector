@@ -1,0 +1,16 @@
+# Testing compose. Execute by running:
+# ./test.sh
+version: '3.1'
+services:
+  influxdb_test:
+    image: influxdb
+    container_name: influxdb_test
+
+  connector_test:
+    container_name: connector_test
+    build: .
+    links:
+      - influxdb_test
+    volumes:
+      - ./:/connector
+    command: /bin/bash -c "source activate connector && pytest -v"
