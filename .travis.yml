@@ -9,7 +9,7 @@ services:
   - docker
 
 script:
-  - docker-compose -f docker-compose.test.yml up connector_test
+  - docker-compose -f docker-compose.test.yml up --exit-code-from connector_test
 
 after_success:
   - sh deploy_dockerhub.sh
