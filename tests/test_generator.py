@@ -35,6 +35,6 @@ def test_write_to_db():
 	os.remove("testing.csv")
 	#Deletes mockup DB
 	db_client.drop_database('test')
-	assert value == 100*0.1256
+	assert value == 100*0.125
 	#bug : dataframe.index.values[0] has more precision than np.datetime64(now)
 	#assert dataframe.index.values[0] == np.datetime64(now)
