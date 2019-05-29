@@ -18,12 +18,23 @@ which gives us 0.000125. In conclusion, to convert this readings to mV
 we just need to multiply the output times 0.125, which is done in the server
 side (mqtt-connector) to prevent time delays.
 """
-import os
+import os, time
 import paho.mqtt.client as mqtt
 import pandas as pd
 import numpy as np
 from datetime import datetime
 from influxdb import DataFrameClient
+
+def wait_for_influxdb(db_client):
+	"""Function to wait for the influxdb service to be available"""
+	try:
+		db_client.ping()
+		print("connected to db")
+		return None
+	except:
+		print("not yet")
+		time.sleep(1)
+		wait_for_influxdb(db_client)
 
 def write_to_db(payload, db_client):
 	#Edits received CSV file from broker to add actual mV values
@@ -94,6 +105,8 @@ def main():
 
 	# connects to database and creates new database
 	db_client = DataFrameClient(host=db_host, port=db_port, username=db_username, password=db_password, database=database)
+	# waits for influxdb service to be active
+	wait_for_influxdb(db_client=db_client)
 	db_client.create_database('testing')
 
 	#Establish conection with broker and start receiving messages
