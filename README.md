@@ -1,3 +1,4 @@
+![CONNECTOR](./docs/connector_logo.png)
 # CONNECTOR - Sensor Data Gathering API Service
 [![Build Status](https://travis-ci.com/encresearch/connector.svg?branch=master)](https://travis-ci.com/encresearch/connector)
 
