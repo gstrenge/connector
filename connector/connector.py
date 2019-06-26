@@ -71,19 +71,20 @@ def main():
 	MQTT Client connector in charge of receiving the 10 Hz csv files,
 	perform calculations and store them in the database
 	"""
-	#influxdb information for connection -- right now is local	
+	#influxdb information for connection -- right now is local
 	db_host = 'influxdb'
 	db_port = 8086
 	db_username = 'root'
 	db_password = 'root'
 	database = 'testing'
-	
+
 	#info of the MQTT broker
 	host = "10.128.189.236"
 	port = 1883
 	keepalive = 30
 	client_id = None #client_id is randomly generated
 	topic = "usa/quincy/1"
+	commsTopic = "communication/influxdbUpdate"
 
 	def on_connect(client, userdata, flags, rc):
 		if rc == 0:
@@ -100,6 +101,7 @@ def main():
 	    payload = msg.payload
 	    try:
 	        write_to_db(payload, db_client)
+			client.publish(commsTopic, "Indexes Changed: ")
 	    except: #This needs to be changed
 		    print("Error")
 
@@ -117,7 +119,7 @@ def main():
 	client.on_connect = on_connect
 	client.on_message = on_message
 	client.connect(host, port, keepalive)
-	
+
 	# Blocking call that processes network traffic, dispatches callbacks and handles reconnecting.
 	client.loop_forever()
 
