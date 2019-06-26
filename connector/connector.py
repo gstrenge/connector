@@ -6,10 +6,10 @@ The devices' GAIN was chosen to be 1. Since this is a 16 bits device, the measur
 voltage will depend on the programmable GAIN. The following table shows the possible
 reading range per chosen GAIN. A GAIN of 1 goes from -4.096V to 4.096V.
 - 2/3 = +/-6.144V
--   1 = +/-4.096V
--   2 = +/-2.048V
--   4 = +/-1.024V
--   8 = +/-0.512V
+-	1 = +/-4.096V
+-	2 = +/-2.048V
+-	4 = +/-1.024V
+-	8 = +/-0.512V
 -  16 = +/-0.256V
 
 This means that the maximum range of this 16 bits device is +/-32767.
@@ -42,7 +42,7 @@ def write_to_db(payload, db_client):
 	print("Received Message")
 	#create new file and write the received msg on it
 	with open('received.csv', 'wb') as fd:
-	    fd.write(payload)
+		fd.write(payload)
 	#Create dataframe
 	df = pd.read_csv('received.csv')
 	#Convert from bits to mV
@@ -98,12 +98,12 @@ def main():
 	def on_message(client, userdata, msg):
 		# The callback for when a PUBLISH message is received from the server.
 		#Detects an arriving message (CSV) and writes it in the db
-	    payload = msg.payload
-	    try:
-	        write_to_db(payload, db_client)
+		payload = msg.payload
+		try:
+			write_to_db(payload, db_client)
 			client.publish(commsTopic, "Indexes Changed: ")
-	    except: #This needs to be changed
-		    print("Error")
+		except: #This needs to be changed
+			print("Error")
 
 	# connects to database and creates new database
 	db_client = DataFrameClient(host=db_host, port=db_port, username=db_username, password=db_password, database=database)
@@ -122,6 +122,7 @@ def main():
 
 	# Blocking call that processes network traffic, dispatches callbacks and handles reconnecting.
 	client.loop_forever()
+	
 
 if __name__ == '__main__':
 	main()
