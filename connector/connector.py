@@ -19,6 +19,7 @@ we just need to multiply the output times 0.125, which is done in the server
 side (mqtt-connector) to prevent time delays.
 """
 import os, time
+import json
 import paho.mqtt.client as mqtt
 import pandas as pd
 import numpy as np
@@ -58,13 +59,21 @@ def write_to_db(payload, db_client):
 	#Given we are only going to be using one field ('mV')
 	#Tags are given as a dict
 	grouped = df.groupby(['adc','channel'])
+
+	data_points_entered = []
+
 	for group in grouped.groups:
 		adc, channel = group
 		tags = dict(adc=adc, channel=channel)
 		sub_df = grouped.get_group(group)[['mV']]
+
+		data_points_entered.append([tags, len(sub_df)])
+
 		db_client.write_points(sub_df, 'measurements', tags=tags)
+
 	print('Data Written to DB')
 	os.remove('received.csv')
+	return data_points_entered
 
 def main():
 	"""
@@ -72,14 +81,14 @@ def main():
 	perform calculations and store them in the database
 	"""
 	#influxdb information for connection -- right now is local
-	db_host = 'influxdb'
+	db_host = 'influxdb' #'localhost'
 	db_port = 8086
 	db_username = 'root'
 	db_password = 'root'
 	database = 'testing'
 
 	#info of the MQTT broker
-	host = "10.128.189.236"
+	host = "10.128.189.236" #'iot.eclipse.org'
 	port = 1883
 	keepalive = 30
 	client_id = None #client_id is randomly generated
@@ -100,10 +109,15 @@ def main():
 		#Detects an arriving message (CSV) and writes it in the db
 		payload = msg.payload
 		try:
-			write_to_db(payload, db_client)
-			client.publish(commsTopic, "Indexes Changed: ")
+			dataEnteredArray = write_to_db(payload, db_client)
+			client.publish(commsTopic, json.dumps(dataEnteredArray))
 		except: #This needs to be changed
 			print("Error")
+
+	def on_publish(client, userdata, result):
+		# Function for clients's specific callback when pubslishing message
+		print("Comms Data Sent")
+		pass
 
 	# connects to database and creates new database
 	db_client = DataFrameClient(host=db_host, port=db_port, username=db_username, password=db_password, database=database)
@@ -118,11 +132,12 @@ def main():
 	client = mqtt.Client(client_id=client_id, clean_session=True)
 	client.on_connect = on_connect
 	client.on_message = on_message
+	client.on_publish = on_publish
 	client.connect(host, port, keepalive)
 
 	# Blocking call that processes network traffic, dispatches callbacks and handles reconnecting.
 	client.loop_forever()
-	
+
 
 if __name__ == '__main__':
 	main()
