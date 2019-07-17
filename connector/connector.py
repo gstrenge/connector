@@ -71,7 +71,6 @@ def write_to_db(payload, db_client):
 
 		#Add dictionary to array that stores information on which adc, channel, and how much data was published to the database with those tags
 		data_points_entered.append(dict(adc=adc, channel=channel, amountOfData=len(sub_df)))
-		#data_points_entered.append([tags, len(sub_df)])
 
 		db_client.write_points(sub_df, 'measurements', tags=tags)
 
