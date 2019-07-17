@@ -60,6 +60,8 @@ def write_to_db(payload, db_client):
 	#Tags are given as a dict
 	grouped = df.groupby(['adc','channel'])
 
+	#Array of dictionaries that stores data on how much data was gathered in each ADC/Channel.
+	#This will allow for variable amounts of data to be recieved and processed correctly
 	data_points_entered = []
 
 	for group in grouped.groups:
@@ -67,7 +69,9 @@ def write_to_db(payload, db_client):
 		tags = dict(adc=adc, channel=channel)
 		sub_df = grouped.get_group(group)[['mV']]
 
-		data_points_entered.append([tags, len(sub_df)])
+		#Add dictionary to array that stores information on which adc, channel, and how much data was published to the database with those tags
+		data_points_entered.append(dict(adc=adc, channel=channel, amountOfData=len(sub_df)))
+		#data_points_entered.append([tags, len(sub_df)])
 
 		db_client.write_points(sub_df, 'measurements', tags=tags)
 
@@ -110,6 +114,8 @@ def main():
 		payload = msg.payload
 		try:
 			dataEnteredArray = write_to_db(payload, db_client)
+
+			#Publishing index information on new data added to Influx to Calculator microservice
 			client.publish(commsTopic, json.dumps(dataEnteredArray))
 		except: #This needs to be changed
 			print("Error")

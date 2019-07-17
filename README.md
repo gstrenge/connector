@@ -6,6 +6,8 @@ Python application API that receives raw measurements data from an MQTT Broker, 
 
 Connector is a Python ETL data pipeline MQTT client that subscribes to sensor data sent by different [publishers](https://github.com/encresearch/publisher) and stores it in InfluxDB.
 
+Connector also notifies our Calculator Microservice upon storing raw data within InfluxDB, allowing for Calculator to convert raw data into correct units
+
 This service is part of our [Earthquake Data Assimilation System](https://github.com/encresearch/data-assimilation-system).
 
 ## Getting Started
