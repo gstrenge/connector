@@ -117,6 +117,7 @@ def main():
 		# The callback for when a PUBLISH message is received from the server.
 		#Detects an arriving message (CSV) and writes it in the db
 		payload = msg.payload
+		#print(payload)
 		try:
 			dataEnteredArray = write_to_db(payload, db_client)
 			#Adding the location of the publisher to the information that will be sent to calculator
