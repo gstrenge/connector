@@ -84,14 +84,14 @@ def main():
 	perform calculations and store them in the database
 	"""
 	#influxdb information for connection -- right now is local
-	db_host = 'localhost'#'influxdb' #'localhost'
+	db_host = 'influxdb' #'localhost'
 	db_port = 8086
 	db_username = 'root'
 	db_password = 'root'
 	database = 'testing'
 
 	#info of the MQTT broker
-	host = 'iot.eclipse.org'#"10.128.189.236" #'iot.eclipse.org'
+	host = "10.128.189.236" #'iot.eclipse.org'
 	port = 1883
 	keepalive = 30
 	client_id = None #client_id is randomly generated
